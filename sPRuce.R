@@ -34,12 +34,11 @@ outgroup <- args[3]
 query_fasta <- args[4]
 prefix <- args[5]
 
-# prefix <- "test"
+# prefix <- "test4"
 # input_blast <- paste(prefix,"_sPRuce_output/",prefix,"_sPRuce_queries_DB.nt.blastn", sep="")
-# tree_size <- "basic"
+# tree_size <- "focus"
 # outgroup <- "auto"
 # query_fasta <- "deorella_krika.fasta"
-
 
 pr2 <- pr2_database()
 
@@ -120,7 +119,7 @@ pr2_ss <- pr2 %>%
     bind_rows(pr2_ss_top20) %>% 
     distinct(genbank_accession, .keep_all=TRUE)
   
-} else if (tree_size == "bigboi") {
+} else if (tree_size == "large") {
   pr2_ss_grouped_filt <- pr2_ss %>% 
     group_by(order, species) %>% 
     group_modify(~sample_n(.x, size = 1)) %>% 
@@ -173,7 +172,7 @@ pr2_ss <- pr2 %>%
     distinct(sseqid) %>% 
     pull(sseqid)
   
-  top_accessions_focus <- pr2_ss %>% 
+  top_accessions_focus <- pr2 %>% 
     filter(genbank_accession %in% top_accessions) %>% 
     pull(order)
   
@@ -289,7 +288,7 @@ query_match_vec_1 <- query.blast %>%
   ungroup() %>% 
   mutate(sseqid = str_extract(sseqid, "[^_]+$")) %>% 
   select(qseqid, sseqid) %>% 
-  left_join(pr2_ss, by = c("sseqid" = "genbank_accession")) %>% 
+  left_join(pr2, by = c("sseqid" = "genbank_accession")) %>% 
     mutate(
       species = NA,
       sequence = NA,
