@@ -44,13 +44,14 @@ sPRuce -q unknown_seqs.fasta -t 6 -s top50 -o Stramenopiles -prefix CoHo17
 sPRuce produces compiled PR2 data, alignment files, IQTree files, and a rendered phylogenetic tree pdf with coloured labels. 
 Before IQtree, it will also produce a .fasttree so you don't have to wait.
 
-Example 1 tree pdf using tree_size = focus (default outgroup = auto)
+Example 1 tree using tree_size = focus (default outgroup = auto) showing all MALV1 sequences
 ![deor_sPRuce_tree](https://github.com/coreyholt/sPRuce/assets/75506746/f6bb206a-5138-4e8a-8aab-24fd112020e4)
 
-Example 2 tree pdf using two different input sequences, tree_size = top50 -o Stramenopiles
+Example 2 tree using two different input sequences, tree_size = top50, and -o Stramenopiles
 ![test2_sPRuce_tree](https://github.com/coreyholt/sPRuce/assets/75506746/5a9df793-3967-4043-9787-a078bb56fbe8)
 
 ## Caveats
+- Trees are based on PR2 "reference sequences" – a subset of the longest sequences from each group. However all PR2 sequences are used for BLAST. 
 - Although sPRuce can handle multiple input sequences, it may struggle to choose an appropriate outgroup if they are not _closely related_ (within the same supergroup).
 - Some functions rely on random choices so you will likely get a different tree if you rerun sPRuce on the same data. This can be useful if it chooses a weird outgroup. 
 
