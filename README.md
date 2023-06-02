@@ -11,9 +11,6 @@ sPRuce takes a fasta file of 18S rRNA gene sequences and creates a phylogenetic 
 To use sPRuce on jezero
 ```
 conda activate sPRuce
-```
-
-```
 bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix
 ```
 [optional parameters]
