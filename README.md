@@ -31,7 +31,8 @@ tree_size might take a little trial and error. These size classifications are re
  - "large" will include one representive sequence from each genus in the same subdivision as the query sequence
  - "all" will include all sequences in the same subdivision as the query sequence.
  - "focus" will include all sequences in the same order as the query sequence.
-**All trees will include the top 20 blast hits from PR2. **
+
+**All trees will include the top 20 blast hits from PR2.**
 
 ## Examples
 ```
