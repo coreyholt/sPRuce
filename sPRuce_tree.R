@@ -171,7 +171,7 @@ p4<- p3 + geom_treescale(y=-1)
 
 p4
 
-if (num_lineages > 200){
+if (num_lineages > 100){
 # Calculate the desired height of the plot based on the number of lineages
 plot_height <- num_lineages / 1.75
 plot.width <- 24 + (quantile(tree$edge.length,0.75)*50)
@@ -189,4 +189,4 @@ ggsave(plot=p4,
        units = "cm",
        limitsize=FALSE)
 
-#prefix<-"both_basic"
+#prefix<-"deor_basic"
