@@ -103,8 +103,8 @@ p2 <- p1 %<+% sPRuce.data.f  +
     colour="black",
     pch=21,
     size = 2
-  ) +
-  coord_cartesian(xlim=c(0,1.1))
+  ) 
+
 p2
 # Define colour palette
 getPalette = colorRampPalette(brewer.pal(12, "Paired"))
@@ -189,4 +189,4 @@ ggsave(plot=p4,
        units = "cm",
        limitsize=FALSE)
 
-#prefix<-"deor_basic"
+#prefix<-"lacrimia_basic"
