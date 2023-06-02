@@ -1,4 +1,4 @@
-s# Install required packages
+# Install required packages
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
