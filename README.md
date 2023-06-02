@@ -15,13 +15,14 @@ bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <
 ```
 [optional parameters]
 ## Options
-  - q <query_fasta>: Path to the query fasta file.
-  - t <n_threads>: Number of threads for parallel processing.
-  - s <tree_size>: Tree size. Options: basic, top50, decent, large, all, or focus. [Default: basic]
-  - o <outgroup>: Outgroup. Choose a taxon or allow sPRUce to choose one. [Default: auto].
-  - m <tree_model>: Tree model for IQ-TREE. [Default: MFP]
-  - p <prefix>: Prefix for output files (Default: output)"
-
+```
+ - q <query_fasta>: Path to the query fasta file.
+ - t <n_threads>: Number of threads for parallel processing.
+ - s <tree_size>: Tree size. Options: basic, top50, decent, large, all, or focus. [Default: basic]
+ - o <outgroup>: Outgroup. Choose a taxon or allow sPRUce to choose one. [Default: auto].
+ - m <tree_model>: Tree model for IQ-TREE. [Default: MFP]
+ - p <prefix>: Prefix for output files
+```
 ### tree_size
 tree_size might take a little trial and error. These size classifications are relative to size of the reference taxa so even "basic" can produce a tree with hundreds of lineages. 
  - "basic" will include one representive sequence for each family in the same subdivision as the query sequence
