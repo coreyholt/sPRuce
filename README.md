@@ -45,6 +45,9 @@ sPRuce -q unknown_dinoflagellate.fasta -t 6 -s top50 -o Stramenopiles -prefix Co
 sPRuce produces compiled PR2 data, alignment files, IQTree files, and a rendered phylogenetic tree pdf with coloured labels. 
 Before IQtree, it will also produce a .fasttree so you don't have to wait.
 
+Example of final tree using tree_size = focus
+[deor_sPRuce_tree.pdf](https://github.com/coreyholt/sPRuce/files/11631870/deor_sPRuce_tree.pdf)
+
 ## Caveats
 - Although sPRuce can handle multiple input sequences, it may struggle to choose an appropriate outgroup if they are not _closely related_ (within the same supergroup).
 - Some functions rely on random choices so you will likely get a different tree if you rerun sPRuce on the same data. This can be useful if it chooses a weird outgroup. 
