@@ -46,7 +46,7 @@ sPRuce produces compiled PR2 data, alignment files, IQTree files, and a rendered
 Before IQtree, it will also produce a .fasttree so you don't have to wait.
 
 Example of final tree using tree_size = focus
-[deor_sPRuce_tree.pdf](https://github.com/coreyholt/sPRuce/files/11631870/deor_sPRuce_tree.pdf)
+![deor_sPRuce_tree](https://github.com/coreyholt/sPRuce/assets/75506746/f6bb206a-5138-4e8a-8aab-24fd112020e4)
 
 ## Caveats
 - Although sPRuce can handle multiple input sequences, it may struggle to choose an appropriate outgroup if they are not _closely related_ (within the same supergroup).
