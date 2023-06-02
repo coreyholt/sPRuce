@@ -61,6 +61,7 @@ RScript /Data/corey/Software/sPRuce/sPRuce_tree.R <prefix>
 (using the original prefix)
 
 ## Caveats
+- sPRuce uses a minimum qcovhsp value of 80 when sorting BLAST hits against PR2.
 - Trees are based on PR2 "reference sequences" – a subset of the longest sequences from each group. However all PR2 sequences are used for BLAST. 
 - Although sPRuce can handle multiple input sequences, it may struggle to choose an appropriate outgroup if they are not _closely related_ (within the same supergroup).
 - Some functions rely on random choices so you will likely get a different tree if you rerun sPRuce on the same data. This can be useful if it chooses a weird outgroup. 
