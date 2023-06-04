@@ -28,7 +28,7 @@ tree_size might take a little trial and error. These size classifications are re
  - "basic" will include one representive sequence for each family in the same subdivision as the query sequence
  - "top50" uses the top 50 blast hits... however there is a qcovhsp cutoff so there may be anywhere from 0-50 (see Example 2)
  - "decent" will include one representive sequence from each genus in the same subdivision as the query sequence
- - "large" will include one representive sequence from each genus in the same subdivision as the query sequence
+ - "large" will include one representive sequence from each species in the same subdivision as the query sequence
  - "all" will include all sequences in the same subdivision as the query sequence.
  - "focus" will include all sequences in the same order as the query sequence.
 
