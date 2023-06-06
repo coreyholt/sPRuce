@@ -82,14 +82,14 @@ mkdir -p "$output_dir"
 # Check if sPRuce_fullDB.fasta doesn't exist, and if so, run sPRUce_DB.R
 if [ ! -f "sPRuce_fullDB.fasta" ]; then
     echo "Building sPRuce database..."
-    Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_DB.R >/dev/null 2>&1
+    Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_DB.R 
 fi
 
 # Move sPRuce_fullDB.fasta to the output directory
 mv sPRuce_fullDB.fasta "$output_dir/"
 
 # Create blast database from sPRuce_fullDB.fasta
-makeblastdb -in "$output_dir/sPRuce_fullDB.fasta" -dbtype 'nucl' -parse_seqids -out "$output_dir/sPRuce_DB" >/dev/null 2>&1
+makeblastdb -in "$output_dir/sPRuce_fullDB.fasta" -dbtype 'nucl' -parse_seqids -out "$output_dir/sPRuce_DB" 
 
 # Run blastn with query file and save the output in blastn format
 echo "Running blastn..."
@@ -101,7 +101,7 @@ mv "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn.header" "$output_dir/${pre
 
 # Run sPRuce_DB.R with additional arguments
 echo "Running sPRuce..."
-Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce.R "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn" "$tree_size" "$outgroup" "$query_fasta" "$prefix" >/dev/null 2>&1
+Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce.R "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn" "$tree_size" "$outgroup" "$query_fasta" "$prefix" 
 
 if [ -s "$output_dir/${prefix}_error_file.txt" ] && grep -q "Error Code 2" "$output_dir/${prefix}_error_file.txt"; then
     echo "Cannot choose an outgroup. Please specify a taxon."
@@ -138,7 +138,7 @@ mafft --quiet --maxiterate 1000 --genafpair --reorder --thread "$n_threads" "$ou
 
 # Trim the alignment using Trimal
 echo "Trimming the alignment with Trimal..."
-trimal -in "$output_dir/${prefix}_sPRuce_alignment.fasta" -out "$output_dir/${prefix}_sPRuce_alignment_trimal.fasta" -gt 0.1 -st 0.001 -keepheader >/dev/null 2>&1
+trimal -in "$output_dir/${prefix}_sPRuce_alignment.fasta" -out "$output_dir/${prefix}_sPRuce_alignment_trimal.fasta" -gt 0.1 -st 0.001 -keepheader 
 
 # Build a phylogenetic tree using FastTree
 echo "Building a phylogenetic tree with FastTree..."
@@ -152,6 +152,6 @@ rm "$output_dir/sPRuce_DB"* "$output_dir/sPRuce_fullDB.fasta" "$output_dir/${pre
 
 # Run sPRuce_tree.R with additional arguments
 echo "Making a jazzy pdf..."
-Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_tree.R $prefix >/dev/null 2>&1
+Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_tree.R $prefix 
 
 echo "All Done!"

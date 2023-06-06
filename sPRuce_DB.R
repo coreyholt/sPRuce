@@ -32,7 +32,8 @@ pr2_ref <- pr2 %>%
          genbank_accession, 
          sequence) %>% 
   distinct(genbank_accession, .keep_all=TRUE) %>% 
-  filter(genbank_accession != "FJ228701")
+  filter(genbank_accession != "FJ228701") %>% 
+  mutate_all(~ str_replace_all(., "_", "-"))
 
 # Write as fasta
 pr2_ref_seq <- Biostrings::DNAStringSet(pr2_ref$sequence)

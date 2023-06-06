@@ -34,13 +34,14 @@ outgroup <- args[3]
 query_fasta <- args[4]
 prefix <- args[5]
 
-# prefix <- "test4"
+# prefix <- "claudia_cladogonium"
 # input_blast <- paste(prefix,"_sPRuce_output/",prefix,"_sPRuce_queries_DB.nt.blastn", sep="")
-# tree_size <- "focus"
-# outgroup <- "auto"
-# query_fasta <- "deorella_krika.fasta"
+# tree_size <- "basic"
+# outgroup <- "Streptophyta"
+# query_fasta <- "cladogonium_partial_18S.fasta"
 
-pr2 <- pr2_database()
+pr2 <- pr2_database() %>% 
+  mutate_all(~ str_replace_all(., "_", "-"))
 
 # Read query BLAST results
 query.blast <-read_tsv(input_blast, show_col_types = FALSE)
@@ -90,6 +91,20 @@ pr2_ss <- pr2 %>%
          species, 
          genbank_accession, 
          sequence)
+
+if (any(query_match_vec == unique(pr2_ss$subdivision))==FALSE){
+  pr2_ss <- pr2 %>% 
+    filter(subdivision %in% query_match_vec) %>% 
+    filter(organelle == "nucleus")%>% 
+    select(subdivision, 
+           class,
+           order,
+           family,
+           genus,
+           species, 
+           genbank_accession, 
+           sequence)
+}
 
 # Generate filtered PR2 hits based on tree size selection
  if (tree_size == "basic"){
@@ -194,9 +209,10 @@ if (outgroup == "auto") {
     distinct(division) %>% 
     pull(division)
   
-  if (all(pr2_match_top_division == pr2_match_top_division[1])==FALSE){
+  if (all(pr2_match_top_division == pr2_match_top_division[1])==FALSE | query_match_vec == paste(pr2_match_top_division, "-X", sep="")){
     pr2_match_top_supergroup<- pr2 %>% 
       filter(subdivision %in% query_match_vec) %>% 
+      filter(!str_detect(supergroup, "_X")) %>% 
       distinct(supergroup) %>% 
       pull(supergroup)
     
@@ -205,6 +221,12 @@ if (outgroup == "auto") {
       distinct(division) %>% 
       filter(!division %in% pr2_match_top_division) %>% 
       pull(division) 
+    
+    error_file <- paste(prefix,"_sPRuce_output/",prefix,"_error_file.txt", sep="") 
+    if (isEmpty(supergroup_alldivisions) == TRUE) {
+      cat("Error Code 2", file = error_file)
+      stop()
+    }
     
     supergroup_alldivisions_sample <- sample(supergroup_alldivisions,1)
     
@@ -222,7 +244,7 @@ if (outgroup == "auto") {
       distinct(genbank_accession, .keep_all=TRUE) 
     
     
-    } else if (all(pr2_match_top_division == pr2_match_top_division[1])==TRUE) {
+    } else if (all(pr2_match_top_division == pr2_match_top_division[1])) {
     pr2_ss.out <- pr2 %>% 
     filter(division %in% pr2_match_top_division) %>% 
     filter(!subdivision %in% query_match_vec) %>% 
@@ -303,11 +325,14 @@ query_match_vec_1 <- query.blast %>%
          sequence,
          seq_name,
          type) %>% 
-  distinct(seq_name, .keep_all = TRUE)
+  distinct(seq_name, .keep_all = TRUE) 
+
 
 # Load query fasta file for sequence
 fasta <- readDNAStringSet(query_fasta, format="fasta")
+names(fasta) <- sapply(strsplit(names(fasta), " "), function(x) x[[1]])
 fasta.f <- fasta[query_match_vec_1$seq_name]
+
 # Add query sequences to meta data
 query_match_vec_1$sequence <- unlist(sapply(query_match_vec_1$seq_name, function(name) {
   query_seq <- fasta.f[which(names(fasta.f) == name)]
