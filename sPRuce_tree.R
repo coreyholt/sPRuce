@@ -13,9 +13,17 @@ if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
   install.packages("RColorBrewer")
 }
 # Check if BiocManager package is installed
-if (!require("BiocManager", quietly = TRUE)) {
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
+}
+
+# Install treeio package
+if (!requireNamespace("treeio", quietly = TRUE)) {
   BiocManager::install("treeio")
+}
+
+# Install ggtree package
+if (!requireNamespace("ggtree", quietly = TRUE)) {
   BiocManager::install("ggtree")
 }
 
