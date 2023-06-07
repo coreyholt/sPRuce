@@ -6,7 +6,9 @@
     \__ \ |    | | \ \ |_| | (_|  __/ \_\
     |___/_|    |_|  \_\__,_|\___\___|_|  
 
-sPRuce takes a fasta file of 18S rRNA gene sequences and creates a phylogenetic tree based on PR2 data. 
+**sPRuce takes a fasta file of 18S rRNA gene sequences and creates a phylogenetic tree based on PR2 data.** 
+
+_sPRuce requires BLAST, seqkit, mafft, trimal, FastTree and IQTree to be installed. It also requires the R packages devtools, pr2database, tidyverse, Biostrings, castor, RColorBrewer, BiocManager, treeio and ggtree (which are all automatically installed if needed)_
 
 To use sPRuce on jezero
 ```
