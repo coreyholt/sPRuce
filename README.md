@@ -10,10 +10,12 @@
 
 _sPRuce requires BLAST, seqkit, mafft, trimal, FastTree and IQTree to be installed. It also requires the R packages devtools, pr2database, tidyverse, Biostrings, castor, RColorBrewer, BiocManager, treeio and ggtree (which are all automatically installed if needed)_
 
-To use sPRuce on jezero
+sPRuce should either be run in the directory containing all sPRuce scripts or instead with the -d parameter pointing to that directory. 
+
+***For Keeling lab users: To use sPRuce on jezero***
 ```
 conda activate sPRuce
-bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix
+bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix [-d <script_dir>]
 ```
 [optional parameters]
 ## Options
@@ -24,6 +26,7 @@ bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <
  - o <outgroup>: Outgroup. Choose a taxon or allow sPRUce to choose one. [Default: auto].
  - m <tree_model>: Tree model for IQ-TREE. [Default: MFP]
  - p <prefix>: Prefix for output files
+ - d <script_dir>: Directory where the R scripts are located if not current directory" [Default: current directory]
 ```
 ### tree_size
 tree_size might take a little trial and error. These size classifications are relative to size of the reference taxa so even "basic" can produce a tree with hundreds of lineages. **I'd recommend starting with basic.**
