@@ -34,11 +34,11 @@ outgroup <- args[3]
 query_fasta <- args[4]
 prefix <- args[5]
 
-# prefix <- "claudia_cladogonium"
-# input_blast <- paste(prefix,"_sPRuce_output/",prefix,"_sPRuce_queries_DB.nt.blastn", sep="")
-# tree_size <- "basic"
-# outgroup <- "Streptophyta"
-# query_fasta <- "cladogonium_partial_18S.fasta"
+#prefix <- "CoHo17_sub1"
+#input_blast <- paste(prefix,"_sPRuce_output/",prefix,"_sPRuce_queries_DB.nt.blastn", sep="")
+#tree_size <- "basic"
+#outgroup <- "auto"
+#query_fasta <- "CoHo17_Euk18SRRNA_sub1.fasta"
 
 pr2 <- pr2_database() %>% 
   mutate_all(~ str_replace_all(., "_", "-"))
@@ -209,7 +209,7 @@ if (outgroup == "auto") {
     distinct(division) %>% 
     pull(division)
   
-  if (all(pr2_match_top_division == pr2_match_top_division[1])==FALSE | query_match_vec == paste(pr2_match_top_division, "-X", sep="")){
+  if (all(pr2_match_top_division == pr2_match_top_division[1])==FALSE | any(query_match_vec %in% paste(pr2_match_top_division, "-X", sep=""))){
     pr2_match_top_supergroup<- pr2 %>% 
       filter(subdivision %in% query_match_vec) %>% 
       filter(!str_detect(supergroup, "_X")) %>% 
