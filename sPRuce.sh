@@ -16,15 +16,17 @@ EOF
 default_tree_size="basic"
 default_outgroup="auto"
 default_tree_model="MFP"
+default_script_dir=$(pwd)
 
 # Set default prefix value
 tree_size=$default_tree_size
 outgroup=$default_outgroup
 tree_model=$default_tree_model
+script_dir=$default_script_dir
 
 # Function to display usage and exit
 usage() {
-    echo "Usage: $0 -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] [-p <prefix>]"
+    echo "Usage: $0 -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] [-p <prefix>] [-d <script_dir>]"
     echo "Options:"
     echo "  -q <query_fasta>       Path to the query fasta file"
     echo "  -t <n_threads>         Number of threads for parallel processing"
@@ -34,11 +36,13 @@ usage() {
     echo "                         (default: $default_outgroup)"
     echo "  -m <tree_model>        Tree model for IQ-TREE (default: $default_tree_model)"
     echo "  -p <prefix>            Prefix for output files"
+    echo "  -d <script_dir>        Directory where the R scripts are located if not current directory"
+    echo "                         (default: $default_script_dir)"
     exit 1
 }
 
 # Parse command-line options
-while getopts ":q:t:s:o:m:p:" opt; do
+while getopts ":q:t:s:o:m:p:d:" opt; do
     case $opt in
     q)
         query_fasta=$OPTARG
@@ -58,6 +62,9 @@ while getopts ":q:t:s:o:m:p:" opt; do
     p)
         prefix=$OPTARG
         ;;
+    d)
+        script_dir=$OPTARG
+        ;;    
     \?)
         echo "Invalid option: -$OPTARG"
         usage
@@ -82,7 +89,7 @@ mkdir -p "$output_dir"
 # Check if sPRuce_fullDB.fasta doesn't exist, and if so, run sPRUce_DB.R
 if [ ! -f "sPRuce_fullDB.fasta" ]; then
     echo "Building sPRuce database..."
-    Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_DB.R >/dev/null 2>&1
+    Rscript "$script_dir/sPRuce_DB.R" >/dev/null 2>&1
 fi
 
 # Move sPRuce_fullDB.fasta to the output directory
@@ -101,7 +108,7 @@ mv "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn.header" "$output_dir/${pre
 
 # Run sPRuce_DB.R with additional arguments
 echo "Running sPRuce..."
-Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce.R "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn" "$tree_size" "$outgroup" "$query_fasta" "$prefix" >/dev/null 2>&1
+Rscript "$script_dir/sPRuce.R" "$output_dir/${prefix}_sPRuce_queries_DB.nt.blastn" "$tree_size" "$outgroup" "$query_fasta" "$prefix" >/dev/null 2>&1
 
 if [ -s "$output_dir/${prefix}_error_file.txt" ] && grep -q "Error Code 2" "$output_dir/${prefix}_error_file.txt"; then
     echo "Cannot choose an outgroup. Please specify a taxon."
@@ -136,8 +143,8 @@ done < "$query_fasta"
 echo "Performing multiple sequence alignment with MAFFT..."
 mafft --quiet --maxiterate 1000 --genafpair --reorder --thread "$n_threads" "$output_dir/${prefix}_sPRuce_refs_queries_uniq2.fasta" > "$output_dir/${prefix}_sPRuce_alignment.fasta"
 
-# Trim the alignment using Trimal
-echo "Trimming the alignment with Trimal..."
+# Trim the alignment using TrimAl
+echo "Trimming the alignment with TrimAl..."
 trimal -in "$output_dir/${prefix}_sPRuce_alignment.fasta" -out "$output_dir/${prefix}_sPRuce_alignment_trimal.fasta" -gt 0.1 -st 0.001 -keepheader >/dev/null 2>&1
 
 # Build a phylogenetic tree using FastTree
@@ -152,6 +159,6 @@ rm "$output_dir/sPRuce_DB"* "$output_dir/sPRuce_fullDB.fasta" "$output_dir/${pre
 
 # Run sPRuce_tree.R with additional arguments
 echo "Making a jazzy pdf..."
-Rscript /Users/coreyholt/Bioinformatics/GitHub/sPRuce/sPRuce_tree.R $prefix >/dev/null 2>&1
+Rscript "$script_dir/sPRuce_tree.R" $prefix >/dev/null 2>&1
 
 echo "All Done!"
