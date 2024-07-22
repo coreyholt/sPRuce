@@ -51,10 +51,10 @@ In rendered pdf trees, lineages will be coloured by order, providing there are f
 Node support values are indicated by coloured circles to avoid messy label positions. Full support = black, 90-99 = dark grey, 70-89 = light grey, less than 70 = white. 
 
 ### Example 1 tree using default tree_size (basic) and outgroup (auto) 
-![single_basic_sPRuce_tree](https://github.com/coreyholt/sPRuce/examples/example1_single_sPRuce_tree.pdf)
+![single_basic_sPRuce_tree](https://github.com/coreyholt/sPRuce/examples/example1_single_sPRuce_tree.png)
 
 ### Example 2 tree using two different input sequences, tree_size = top50, and -o Stramenopiles
-![double_top50_sPRuce_tree](https://github.com/coreyholt/sPRuce/examples/example2_double_sPRuce_tree.pdf)
+![double_top50_sPRuce_tree](https://github.com/coreyholt/sPRuce/examples/example2_double_sPRuce_tree.png)
 
 If you are unhappy with the colours you can rerun the tree script 
 ``` 
