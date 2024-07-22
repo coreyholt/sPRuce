@@ -12,10 +12,9 @@ _sPRuce requires BLAST, seqkit, mafft, trimal, FastTree and IQTree to be install
 
 sPRuce should either be run in the directory containing all sPRuce scripts or instead with the -d parameter pointing to that directory. 
 
-***For Keeling lab users: To use sPRuce on jezero***
 ```
 conda activate sPRuce
-bash /Data/corey/Software/sPRuce/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix [-d <script_dir>]
+bash /path_to_sPRruce_scripts/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix [-d <script_dir>]
 ```
 [optional parameters]
 ## Options
@@ -61,7 +60,7 @@ Node support values are indicated by coloured circles to avoid messy positions. 
 
 If you are unhappy with the colours you can rerun the tree script 
 ``` 
-RScript /Data/corey/Software/sPRuce/sPRuce_tree.R <prefix>
+RScript /path_to_sPRruce_scripts/sPRuce_tree.R <prefix>
 ```
 (using the original prefix)
 
