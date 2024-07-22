@@ -197,12 +197,18 @@ max_x <- max(label_coords$x)
 p5 <- p4 + xlim(0,max_x*2)
 p5
 
+if (num_lineages <=35){
+  plot_height = 17.5
+} else if (num_lineages > 35 ) {
+  plot_height = num_lineages / 2
+}
+
 # Save final tree as pdf
 ggsave(plot=p5, 
        paste(prefix,"_sPRuce_output/",prefix,"_sPRuce_tree.pdf", sep=""),
        width=25,
        device="pdf",
-       height=num_lineages / 2,
+       height=plot_height,
        dpi="screen",
        units = "cm",
        limitsize=FALSE)

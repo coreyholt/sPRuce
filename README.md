@@ -8,13 +8,12 @@
 
 **sPRuce takes a fasta file of 18S rRNA gene sequences and creates a phylogenetic tree based on PR2 data.** 
 
-_sPRuce requires BLAST, seqkit, mafft, trimal, FastTree and IQTree to be installed. It also requires the R packages devtools, pr2database, tidyverse, Biostrings, castor, RColorBrewer, BiocManager, treeio and ggtree (which are all automatically installed if needed)_
+_sPRuce requires BLAST, seqkit, mafft, trimal, FastTree and IQTree to be installed. It also requires the R packages devtools, pr2database, tidyverse, Biostrings, castor, RColorBrewer, BiocManager, treeio and ggtree_
 
-sPRuce should either be run in the directory containing all sPRuce scripts or instead with the -d parameter pointing to that directory. 
+Be sure to add the directory containing all sPRruce scripts to your PATH before starting.
 
 ```
-conda activate sPRuce
-bash /path_to_sPRruce_scripts/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix [-d <script_dir>]
+sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tree_size>] [-o <outgroup>] [-m <tree_model>] -p prefix
 ```
 [optional parameters]
 ## Options
@@ -25,7 +24,6 @@ bash /path_to_sPRruce_scripts/sPRuce.sh -q <query_fasta> -t <n_threads> [-s <tre
  - o <outgroup>: Outgroup. Choose a taxon or allow sPRUce to choose one. [Default: auto].
  - m <tree_model>: Tree model for IQ-TREE. [Default: MFP]
  - p <prefix>: Prefix for output files
- - d <script_dir>: Directory where the R scripts are located if not current directory" [Default: current directory]
 ```
 ### tree_size
 tree_size might take a little trial and error. These size classifications are relative to size of the reference taxa so even "basic" can produce a tree with hundreds of lineages. **I'd recommend starting with basic.**
@@ -46,11 +44,11 @@ sPRuce -q two_unknown_SAR.fasta -t 6 -s top50 -o Stramenopiles -prefix CoHo17
 
 ## Outputs
 sPRuce produces compiled PR2 data, alignment files, IQTree files, and a rendered phylogenetic tree pdf with coloured labels. 
-Before IQtree, it will also produce a .fasttree so you don't have to wait.
+Before running IQtree, it will also produce a .fasttree (for the impatient).
 
 Tip labes are made up of subdivision_order_species_genbankaccession. 
-In rendered pdf trees, lineages will be coloured by order providing there are fewer than 16. If not, they will be coloured by subdivision. 
-Node support values are indicated by coloured circles to avoid messy positions. Full support = black, 90-99 = dark grey, 70-89 = light grey, less than 70 = white. 
+In rendered pdf trees, lineages will be coloured by order, providing there are fewer than 16. If not, they will be coloured by subdivision. 
+Node support values are indicated by coloured circles to avoid messy label positions. Full support = black, 90-99 = dark grey, 70-89 = light grey, less than 70 = white. 
 
 ### Example 1 tree using default tree_size (basic) and outgroup (auto) 
 ![deor_basic_sPRuce_tree](https://github.com/coreyholt/sPRuce/assets/75506746/a0662852-3aa3-4313-8b38-a90d143841e0)
@@ -60,7 +58,7 @@ Node support values are indicated by coloured circles to avoid messy positions. 
 
 If you are unhappy with the colours you can rerun the tree script 
 ``` 
-RScript /path_to_sPRruce_scripts/sPRuce_tree.R <prefix>
+RScript $(which sPRuce_tree.R) <prefix>
 ```
 (using the original prefix)
 
