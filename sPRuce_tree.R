@@ -39,7 +39,7 @@ args <- commandArgs(trailingOnly = TRUE)
 
 # Check if the correct number of arguments is provided
 if (length(args) != 1) {
-  stop("Incorrect number of arguments. Usage: Rscript your_script.R input.fasta tree.size outgroup")
+  stop("Incorrect number of arguments. Usage: Rscript sPRuce_tree.R prefix")
 }
 
 # Assign input filename and outgroup value
